@@ -1,0 +1,54 @@
+# DSL version, should appear in the main blueprint.yaml
+# and may appear in other imports. In such case, the versions must match
+tosca_definitions_version: cloudify_dsl_1_2
+
+imports:
+  - http://www.getcloudify.org/spec/cloudify/3.3.1/types.yaml
+  - http://100.0.6.141/cloudify/spec/aliyun-plugin/0.1.1/plugin.yaml
+
+inputs:
+    # example input that could be injected by test
+    existing_vpc_id:
+        default: vpc-25t09nupb
+    existing_subnet_id:
+        default: vsw-25qxhphu6
+    # note: default aliyun accessid file is in this dir ~/.aliyuncli
+    # config files: configure credentials
+node_templates:
+  new_vpc:
+    type: cloudify.aliyun.nodes.VPC
+    properties:
+      cidr_block: 10.0.0.0/8
+
+  existing_vpc:
+    type: cloudify.aliyun.nodes.VPC
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_vpc_id }
+      cidr_block: 11.0.0.0/24
+
+  new_subnet:
+    type: cloudify.aliyun.nodes.Subnet
+    properties:
+      cidr_block: 10.0.0.0/16
+    relationships:
+      - type: cloudify.aliyun.relationships.subnet_contained_in_vpc
+        target: new_vpc
+
+  existing_subnet:
+    type: cloudify.aliyun.nodes.Subnet
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_subnet_id }
+      cidr_block: 172.19.0.0/16
+    relationships:
+      - type: cloudify.aliyun.relationships.subnet_contained_in_vpc
+        target: existing_vpc
+        
+outputs:
+    # example output the could be used to simplify assertions by test
+    new_vpc:
+        value: { get_attribute: [new_vpc, aliyun_resource_id] }
+    new_subnet:
+        value: { get_attribute: [new_subnet, aliyun_resource_id] }
+     

@@ -1,0 +1,64 @@
+# DSL version, should appear in the main blueprint.yaml
+# and may appear in other imports. In such case, the versions must match
+tosca_definitions_version: cloudify_dsl_1_2
+
+imports:
+  - types.yaml
+  - plugin.yaml
+
+inputs:
+    # example input that could be injected by test
+    existing_vpc_id:
+        default: vpc-25a0ko9h8
+    existing_subnet_id:
+        default: vsw-25viu1g0n
+    existing_vm:
+        default: 'specify_an_existing_instance_id'
+
+node_templates:
+  existing_vpc:
+    type: cloudify.aliyun.nodes.VPC
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_vpc_id }
+      cidr_block: 172.16.0.0/12
+
+  existing_subnet:
+    type: cloudify.aliyun.nodes.Subnet
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_subnet_id }
+      cidr_block: 172.16.0.0/24
+    relationships:
+      - type: cloudify.aliyun.relationships.subnet_contained_in_vpc
+        target: existing_vpc
+  new_vm:
+    type: cloudify.aliyun.nodes.Instance
+    properties:
+      agent_config:
+        install_method: none
+        # for basic test, not install agent now
+      name: wybTest
+      image_id: centos7u0_64_40G_aliaegis_20160120.vhd
+      instance_type: ecs.t1.small
+      parameters:
+        InstanceChargeType: PostPaid
+        # PrePaid | PostPaid
+        SystemDisk.Size: 40
+        SecurityGroupId: sg-25i54ut7u
+        Password: TestdaYanG12345
+        # InternetChargeType: PayByTraffic
+        # PayByTraffic | PayByBandwidth ,only valid in classic network and has PublicIpAddress 
+        # otherwise aliyun autoset to empty
+        # InternetMaxBandwidthOut: 1
+        # only valid when InternetChargeType is valid
+        # ModifyInstanceNetworkSpec can set InternetMaxBandwidthOut/In properties
+        # IoOptimized none|optimized
+    relationships:
+      - type: cloudify.aliyun.relationships.instance_contained_in_subnet
+        target: existing_subnet
+    
+outputs:
+    # example output the could be used to simplify assertions by test
+    new_vm:
+        value: { get_attribute: [new_vm, aliyun_resource_id] }

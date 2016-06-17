@@ -1,0 +1,645 @@
+##################################################################################
+# Cloudify ALIYUN built in types and plugins definitions.
+##################################################################################
+
+plugins:
+  aliyun:
+    executor: central_deployment_agent
+    source: http://100.0.6.141/cloudify/3.3.1/plugin/aliyun_0.1.1.zip
+    package_name: cloudify-aliyun-plugin
+    package_version: '0.1.1'
+
+data_types:
+  cloudify.datatypes.aliyun.Config:
+    properties:
+      aliyun_access_key_id:
+        description: >
+          The ID of your ALIYUN ACCESS KEY.
+        type: string
+        required: false
+      aliyun_access_key_secret:
+        description: >
+          The ID of your ALIYUN SECRET KEY.
+        type: string
+        required: false
+      region:
+        description: >
+          The Region RegionId, such as cn-hangzhou.
+        type: string
+        required: false
+      region_endpoint:
+        description: >
+          The endpoint for the given region.
+        type: string
+        required: false
+
+  cloudify.datatypes.aliyun.Route:
+    properties:
+      route_table_id:
+        description: >
+          In most cases, leave this blank, because the route table is implicit from the node or relationship that is creating the route.
+        type: string
+        required: false
+      destination_cidr_block:
+        description: >
+          This is the cidr_block that you want to route traffic for to the device.
+        type: string
+        required: true
+      next_hop_type:
+        description: >
+          Instance|Tunnel|HaVip
+        type: string
+        required: false
+        default: 'Instance'
+      next_hop_id:
+        description: >
+          The instance id of the next hop, for non ECMP route
+        type: string
+        required: false
+      next_hop_list:
+        description: >
+          for ECMP route, NextHopType and NextHopId must be null, include 2-4 next hop items.
+        default: []
+        required: false
+
+  cloudify.datatypes.aliyun.SecurityGroupRule:
+    properties:
+      egress:
+        description: >
+          Whether the rule applies to egress traffic.
+        type: boolean
+        default: false
+        required: false
+      ip_protocol:
+        description: >
+          tcp | udp | icmp | gre | all.
+        type: string
+        required: true
+      port_range_from:
+        description: >
+          The first port in the range. icmp/gre/all: -1/-1 tcp:1/65535
+        type: integer
+        required: true
+      port_range_to:
+        description: >
+          The last port in the range.
+        type: integer
+        required: true
+      peer_group_id:
+        description: >
+          Source (for in) or Destination (for out) Group Id
+        type: string
+        required: false
+      peer_group_owner_account:
+        description: >
+          Source (for in) or Destination (for out) Group Owner Account
+        type: string
+        required: false
+      peer_cidr_ip:
+        description: >
+          Source (for in) or Destination (for out) cidr ip
+        type: string
+        required: false
+      policy:
+        description: Either accept or drop.
+        type: string
+        required: false
+        default: 'accept'
+      priority:
+        description: >
+          Priority, 1-100.
+        type: integer
+        required: false
+        default: 1
+      nic_type:
+        description: >
+            internet or intranet. for VPC , it must be intranet
+        type: string
+        required: false
+        default: 'internet'
+
+  cloudify.datatypes.aliyun.SLBListener:
+    properties:
+      protocol:
+        description: >
+          http|https|tcp|udp
+        type: string
+        required: true
+      listener_port:
+        type: integer
+        required: true
+      backend_server_port:
+        type: integer
+        required: true
+      band_width:
+        description: >
+          -1 | 1-1000 (Mbps)
+        type: integer
+        required: false
+      scheduler:
+        description: >
+          wrr | wlc
+        type: string
+        required: false
+        default: 'wrr'
+      health_check:
+        description: >
+          'on' | 'off'
+        type: string
+        required: true
+        default: 'off'
+      others:
+        description: >
+          The key value pair parameters, such as HealthCheck releated, see aliyun CreateLoadBalancerXXXListener API doc
+          VServerGroupId: existing VServerGroupId
+          VServerGroupName: if not exist, will auto create (not implemented yet)
+        default: {}
+        required: false
+
+node_types:
+
+  cloudify.aliyun.nodes.Instance:
+    derived_from: cloudify.nodes.Compute
+    properties:
+      use_external_resource:
+        description: >
+          Indicate whether the resource exists or if Cloudify should create the resource,
+          true if you are bringing an existing resource, false if you want cloudify to create it.
+        type: boolean
+        default: false
+        required: true
+      resource_id:
+        description: >
+          The ALIYUN resource ID of the external resource, if use_external_resource is true.
+          Otherwise it is an empty string.
+        type: string
+        default: ''
+      name:
+        description: >
+          Optional field if you want to add a specific name to the instance.
+        default: ''
+        required: false
+      image_id:
+        description: >
+          The ID of the ALIYUN image in your Aliyun account.
+        type: string
+        required: true
+      instance_type:
+        description: >
+          The instance's size.
+        type: string
+        required: true
+      #security_group_id? required?  
+      parameters:
+        description: >
+          The key value pair parameters allowed by Aliyun API to the
+          ECS CreateInstance  command, such as Password, InternetChargeType, IoOptimized,  etc.           
+          see https://help.aliyun.com/document_detail/25499.html
+          special: 'agents_security_group' is security_group_ids for cloudify agent
+        default: {}
+        required: false
+      aliyun_config:
+        description: >
+          A dictionary of values to pass to authenticate with the ALIYUN API.
+        type: cloudify.datatypes.aliyun.Config
+        required: false
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create:
+          implementation: aliyun.ecs.instance.create
+        start:
+          implementation: aliyun.ecs.instance.start
+        stop:
+          implementation: aliyun.ecs.instance.stop
+        delete:
+          implementation: aliyun.ecs.instance.delete
+      cloudify.interfaces.validation:
+        creation:
+          implementation: aliyun.ecs.instance.creation_validation
+  #VPC Elastic ip or classic public ip
+  cloudify.aliyun.nodes.ElasticIP:
+    derived_from: cloudify.nodes.VirtualIP
+    properties:
+      use_external_resource:
+        description: >
+          Indicate whether the resource exists or if Cloudify should create the resource,
+          true if you are bringing an existing resource, false if you want cloudify to create it.
+        type: boolean
+        default: false
+        required: true
+      resource_id:
+        description: >
+          The ALIYUN resource ID of the external resource, if use_external_resource is true.
+          Otherwise it is an empty string.
+        type: string
+        default: ''
+        required: true
+      domain:
+        description: >
+          Set this to '' if in classic network.
+        type: string
+        default: 'VPC'
+      band_width:
+        description: >
+          only for VPC EIP, unit: Mbsps.
+        type: string
+        required: false
+        default: '5'
+      internet_charge_type:
+        description: >
+          PayByBandwidth or PayByTraffic, only for VPC EIP.
+        type: string
+        required: false
+        default: 'PayByBandwidth'
+      aliyun_config:
+        description: >
+          A dictionary of values to pass to authenticate with the ALIYUN API.
+        type: cloudify.datatypes.aliyun.Config
+        required: false
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create: aliyun.ecs.elasticip.allocate
+        delete: aliyun.ecs.elasticip.release
+      cloudify.interfaces.validation:
+        creation: aliyun.ecs.elasticip.creation_validation
+
+  cloudify.aliyun.nodes.SecurityGroup:
+    derived_from: cloudify.nodes.SecurityGroup
+    properties:
+      use_external_resource:
+        description: >
+          Indicate whether the resource exists or if Cloudify should create the resource,
+          true if you are bringing an existing resource, false if you want cloudify to create it.
+        type: boolean
+        default: false
+        required: true
+      resource_id:
+        description: >
+          The ALIYUN resource ID of the external resource, if use_external_resource is true.
+          Otherwise it is an empty string.
+        type: string
+        default: ''
+        required: true
+      security_group_name:
+        description: >
+          The security group name. should be empty as default, can be any EN or CN words with lengh of [2,128],
+          can contain numbers, '.', ',', '_' or '-' but must starts with English letters or Chinese words.
+        type: string
+        default: ''
+        required: false
+      description:
+        description: >
+          The description field that is required for every security group that you create
+          in Aliyun.
+        type: string
+        required: false
+      rules:
+        default: []
+        required: true
+        description: >
+          list of SecurityGroupRule
+      aliyun_config:
+        description: >
+          A dictionary of values to pass to authenticate with the ALIYUN API.
+        type: cloudify.datatypes.aliyun.Config
+        required: false
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create: aliyun.ecs.securitygroup.create
+        delete: aliyun.ecs.securitygroup.delete
+      cloudify.interfaces.validation:
+        creation: aliyun.ecs.securitygroup.creation_validation
+
+  cloudify.aliyun.nodes.Volume:
+    derived_from: cloudify.nodes.Volume
+    properties:
+      use_external_resource:
+        description: >
+          Indicate whether the resource exists or if Cloudify should create the resource,
+          true if you are bringing an existing resource, false if you want cloudify to create it.
+        type: boolean
+        default: false
+        required: true
+      resource_id:
+        description: >
+          The ALIYUN resource ID of the external resource, if use_external_resource is true.
+          Otherwise it is an empty string.
+        type: string
+        default: ''
+        required: true
+      size:
+        description: >
+          The size of the volume in GB.
+        type: integer
+        required: true
+      zone:
+        description: >
+          A string representing the ALIYUN availability zone.
+        type: string
+        required: true
+      category:
+        description: >
+          cloud |cloud_efficiency|cloud_ssd
+        type: string
+        required: false
+        default: 'cloud'
+      snapshot_id:
+        description: >
+          SnapshotId
+        type: string
+        required: false
+      name:
+        description: >
+          disk name
+        type: string
+        required: false
+      description:
+        description: >
+          disk description
+        type: string
+        required: false
+      device:
+        description: >
+          The device on the instance?
+        type: string
+        required: false
+      aliyun_config:
+        description: >
+          A dictionary of values to pass to authenticate with the ALIYUN API.
+        type: cloudify.datatypes.aliyun.Config
+        required: false
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create:
+          implementation: aliyun.ecs.disk.create
+          inputs:
+            args:
+              default: {}
+        delete:
+          implementation: aliyun.ecs.disk.delete
+          inputs:
+            args:
+              default: {}
+      cloudify.interfaces.validation:
+        creation: aliyun.ecs.disk.creation_validation
+      cloudify.interfaces.aliyun.snapshot:
+        create:
+          implementation: aliyun.ecs.disk.create_snapshot
+          inputs:
+            args:
+              default: {}
+  #todo: not implemented in aliyun
+  cloudify.aliyun.nodes.KeyPair:
+    derived_from: cloudify.nodes.Root
+    properties:
+      use_external_resource:
+        description: >
+          Indicate whether the resource exists or if Cloudify should create the resource.
+        type: boolean
+        default: false
+      resource_id:
+        description: >
+          The ALIYUN resource ID of the external resource, if use_external_resource is true.
+          If use_external_resource is false, this will be the keys name and ID in ALIYUN.
+          If left blank, the plugin will set a name for you.
+          Otherwise it is an empty string.
+        type: string
+        default: ''
+        required: true
+      private_key_path:
+        description: >
+          The path where the key should be saved on the machine. If this is a bootstrap
+          process, this refers to the local computer. If this will run on the manager,
+          this will be saved on the manager.
+        type: string
+        required: true
+      aliyun_config:
+        description: >
+          A dictionary of values to pass to authenticate with the ALIYUN API.
+        type: cloudify.datatypes.aliyun.Config
+        required: false
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create: aliyun.ecs.keypair.create
+        delete: aliyun.ecs.keypair.delete
+      cloudify.interfaces.validation:
+        creation: aliyun.ecs.keypair.creation_validation
+
+  cloudify.aliyun.nodes.ServerLoadBalancer:
+    derived_from: cloudify.nodes.LoadBalancer
+    properties:
+      use_external_resource:
+        description: >
+          Indicate whether the resource exists or if Cloudify should create the resource,
+          true if you are bringing an existing resource, false if you want cloudify to create it.
+        type: boolean
+        default: false
+        required: true
+      resource_id:
+        description: >
+          The ALIYUN resource ID of the external resource, if use_external_resource is true.
+          Otherwise it is an empty string.
+        type: string
+        default: ''
+        required: true
+      slb_name:
+        type: string
+        description: >
+          The mnemonic name associated with the new load balancer
+        required: false
+      address_type:
+        type: string
+        description: >
+          internet | intranet
+        required: false
+        default: 'internet'
+      internet_charge_type:
+        type: string
+        description: >
+          paybybandwidth | paybytraffic
+        required: false
+        default: 'paybytraffic'
+      band_width:
+        type: integer
+        description: >
+          1-1000(Mbps)
+        required: false
+        default: 1
+      master_zone_id:
+        description: >
+          Master_Zone_Id
+        type: string          
+        required: false
+      slave_zone_id:
+        description: >
+          Slave_Zone_Id
+        type: string          
+        required: false
+      listeners:
+        description: >
+          listeners (http, https, tcp, udp), list of aliyun.SLBListener 
+        required: true
+      aliyun_config:
+        description: >
+          A dictionary of values to pass to authenticate with the ALIYUN API.
+        type: cloudify.datatypes.aliyun.Config
+        required: false
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create:
+          implementation: aliyun.slb.slb.create
+        delete:
+          implementation: aliyun.slb.slb.delete
+      cloudify.interfaces.validation:
+        creation:
+          implementation: aliyun.slb.slb.creation_validation
+
+  cloudify.aliyun.nodes.VPC:
+    derived_from: cloudify.nodes.Network
+    properties:
+      use_external_resource:
+        description: >
+          Indicate whether the resource exists or if Cloudify should create the resource,
+          true if you are bringing an existing resource, false if you want cloudify to create it.
+        type: boolean
+        default: false
+        required: true
+      resource_id:
+        description: >
+          The ALIYUN resource ID of the external resource, if use_external_resource is true.
+          Otherwise it is an empty string.
+        type: string
+        default: ''
+        required: true
+      cidr_block:
+        description: >
+          The CIDR Block that you will split this VPCs subnets across.
+          10.0.0.0/8 | 172.16.0.0/12 | 192.168.0.0/16
+        type: string
+        required: false
+        default: '172.16.0.0/12'
+      user_cidr:
+        description: >
+          The user defined CIDR Block, max 3, splitted by ,
+        type: string
+        required: false
+      vpc_name:
+        type: string
+        required: false
+      description:
+        type: string
+        required: false
+      aliyun_config:
+        description: >
+          A dictionary of values to pass to authenticate with the ALIYUN API.
+        type: cloudify.datatypes.aliyun.Config
+        required: false
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create: aliyun.vpc.vpc.create
+        delete: aliyun.vpc.vpc.delete
+      cloudify.interfaces.validation:
+        creation: aliyun.vpc.vpc.creation_validation
+
+  #aliyun VSwitch
+  cloudify.aliyun.nodes.Subnet:
+    derived_from: cloudify.nodes.Subnet
+    properties:
+      use_external_resource:
+        description: >
+          Indicate whether the resource exists or if Cloudify should create the resource,
+          true if you are bringing an existing resource, false if you want cloudify to create it.
+        type: boolean
+        default: false
+        required: true
+      resource_id:
+        description: >
+          The ALIYUN resource ID of the external resource, if use_external_resource is true.
+          Otherwise it is an empty string.
+        type: string
+        default: ''
+        required: true
+      cidr_block:
+        description: >
+          The CIDR Block that instances will be on.
+        type: string
+        required: true
+      availability_zone:
+        description: >
+          The availability zone that you want your subnet in. if null, will use first one
+        type: string
+        default: ''
+        required: false
+      name:
+        type: string
+        required: false
+      description:
+        type: string
+        required: false
+      aliyun_config:
+        description: >
+          A dictionary of values to pass to authenticate with the ALIYUN API.
+        type: cloudify.datatypes.aliyun.Config
+        required: false
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create: aliyun.vpc.subnet.create
+        delete: aliyun.vpc.subnet.delete
+      cloudify.interfaces.validation:
+        creation: aliyun.vpc.subnet.creation_validation
+
+
+relationships:
+  cloudify.aliyun.relationships.instance_connected_to_elastic_ip:
+    derived_from: cloudify.relationships.connected_to
+    source_interfaces:
+      cloudify.interfaces.relationship_lifecycle:
+        establish: aliyun.ecs.elasticip.associate
+        unlink: aliyun.ecs.elasticip.disassociate
+
+  cloudify.aliyun.relationships.instance_connected_to_security_group:
+    derived_from: cloudify.relationships.connected_to
+    source_interfaces:
+      cloudify.interfaces.relationship_lifecycle:
+        establish: aliyun.ecs.securitygroup.join
+        unlink: aliyun.ecs.securitygroup.leave
+
+  cloudify.aliyun.relationships.instance_connected_to_load_balancer:
+    derived_from: cloudify.relationships.connected_to
+    source_interfaces:
+      cloudify.interfaces.relationship_lifecycle:
+        establish:
+          implementation: aliyun.slb.slb.add_instance_to_slb
+          inputs:
+            weight:
+              default: 100
+              description: >
+                range: 1-100
+            vserver_group_id:
+              default: ''
+            vserver_group_name:
+              default: ''
+        unlink: aliyun.slb.slb.remove_instance_from_slb
+
+  cloudify.aliyun.relationships.volume_connected_to_instance:
+    derived_from: cloudify.relationships.connected_to
+    source_interfaces:
+      cloudify.interfaces.relationship_lifecycle:
+        establish: aliyun.ecs.disk.attach
+        unlink:
+          implementation: aliyun.ecs.disk.detach
+          inputs:
+            args:
+              default: {}
+
+  cloudify.aliyun.relationships.subnet_contained_in_vpc:
+    derived_from: cloudify.relationships.contained_in
+
+  cloudify.aliyun.relationships.instance_contained_in_subnet:
+    derived_from: cloudify.relationships.contained_in
+
+  cloudify.aliyun.relationships.slb_contained_in_subnet:
+    derived_from: cloudify.relationships.contained_in
+
+  cloudify.aliyun.relationships.security_group_contained_in_vpc:
+    derived_from: cloudify.relationships.contained_in

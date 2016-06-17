@@ -1,0 +1,241 @@
+{
+    "InstanceTypes": {
+        "InstanceType": [
+            {
+                "CpuCoreCount": 1, 
+                "MemorySize": 0.5, 
+                "InstanceTypeFamily": "ecs.t1", 
+                "InstanceTypeId": "ecs.t1.xsmall"
+            }, 
+            {
+                "CpuCoreCount": 1, 
+                "MemorySize": 1.0, 
+                "InstanceTypeFamily": "ecs.t1", 
+                "InstanceTypeId": "ecs.t1.small"
+            }, 
+            {
+                "CpuCoreCount": 2, 
+                "MemorySize": 2.0, 
+                "InstanceTypeFamily": "ecs.s2", 
+                "InstanceTypeId": "ecs.s2.small"
+            }, 
+            {
+                "CpuCoreCount": 4, 
+                "MemorySize": 4.0, 
+                "InstanceTypeFamily": "ecs.s3", 
+                "InstanceTypeId": "ecs.s3.medium"
+            }, 
+            {
+                "CpuCoreCount": 8, 
+                "MemorySize": 8.0, 
+                "InstanceTypeFamily": "ecs.c1", 
+                "InstanceTypeId": "ecs.c1.small"
+            }, 
+            {
+                "CpuCoreCount": 16, 
+                "MemorySize": 16.0, 
+                "InstanceTypeFamily": "ecs.c2", 
+                "InstanceTypeId": "ecs.c2.medium"
+            }, 
+            {
+                "CpuCoreCount": 1, 
+                "MemorySize": 2.0, 
+                "InstanceTypeFamily": "ecs.s1", 
+                "InstanceTypeId": "ecs.s1.small"
+            }, 
+            {
+                "CpuCoreCount": 2, 
+                "MemorySize": 4.0, 
+                "InstanceTypeFamily": "ecs.s2", 
+                "InstanceTypeId": "ecs.s2.large"
+            }, 
+            {
+                "CpuCoreCount": 4, 
+                "MemorySize": 8.0, 
+                "InstanceTypeFamily": "ecs.s3", 
+                "InstanceTypeId": "ecs.s3.large"
+            }, 
+            {
+                "CpuCoreCount": 8, 
+                "MemorySize": 16.0, 
+                "InstanceTypeFamily": "ecs.c1", 
+                "InstanceTypeId": "ecs.c1.large"
+            }, 
+            {
+                "CpuCoreCount": 16, 
+                "MemorySize": 32.0, 
+                "InstanceTypeFamily": "ecs.c2", 
+                "InstanceTypeId": "ecs.c2.large"
+            }, 
+            {
+                "CpuCoreCount": 1, 
+                "MemorySize": 4.0, 
+                "InstanceTypeFamily": "ecs.s1", 
+                "InstanceTypeId": "ecs.s1.medium"
+            }, 
+            {
+                "CpuCoreCount": 2, 
+                "MemorySize": 8.0, 
+                "InstanceTypeFamily": "ecs.s2", 
+                "InstanceTypeId": "ecs.s2.xlarge"
+            }, 
+            {
+                "CpuCoreCount": 4, 
+                "MemorySize": 16.0, 
+                "InstanceTypeFamily": "ecs.m1", 
+                "InstanceTypeId": "ecs.m1.medium"
+            }, 
+            {
+                "CpuCoreCount": 8, 
+                "MemorySize": 32.0, 
+                "InstanceTypeFamily": "ecs.m1", 
+                "InstanceTypeId": "ecs.m1.xlarge"
+            }, 
+            {
+                "CpuCoreCount": 16, 
+                "MemorySize": 64.0, 
+                "InstanceTypeFamily": "ecs.c2", 
+                "InstanceTypeId": "ecs.c2.xlarge"
+            }, 
+            {
+                "CpuCoreCount": 1, 
+                "MemorySize": 8.0, 
+                "InstanceTypeFamily": "ecs.s1", 
+                "InstanceTypeId": "ecs.s1.large"
+            }, 
+            {
+                "CpuCoreCount": 2, 
+                "MemorySize": 16.0, 
+                "InstanceTypeFamily": "ecs.s2", 
+                "InstanceTypeId": "ecs.s2.2xlarge"
+            }, 
+            {
+                "CpuCoreCount": 4, 
+                "MemorySize": 32.0, 
+                "InstanceTypeFamily": "ecs.m2", 
+                "InstanceTypeId": "ecs.m2.medium"
+            }, 
+            {
+                "CpuCoreCount": 8, 
+                "MemorySize": 64.0, 
+                "InstanceTypeFamily": "ecs.m2", 
+                "InstanceTypeId": "ecs.m2.xlarge"
+            }, 
+            {
+                "CpuCoreCount": 1, 
+                "MemorySize": 1.0, 
+                "InstanceTypeFamily": "ecs.n1", 
+                "InstanceTypeId": "ecs.n1.tiny"
+            }, 
+            {
+                "CpuCoreCount": 1, 
+                "MemorySize": 2.0, 
+                "InstanceTypeFamily": "ecs.n1", 
+                "InstanceTypeId": "ecs.n1.small"
+            }, 
+            {
+                "CpuCoreCount": 2, 
+                "MemorySize": 4.0, 
+                "InstanceTypeFamily": "ecs.n1", 
+                "InstanceTypeId": "ecs.n1.medium"
+            }, 
+            {
+                "CpuCoreCount": 4, 
+                "MemorySize": 8.0, 
+                "InstanceTypeFamily": "ecs.n1", 
+                "InstanceTypeId": "ecs.n1.large"
+            }, 
+            {
+                "CpuCoreCount": 8, 
+                "MemorySize": 16.0, 
+                "InstanceTypeFamily": "ecs.n1", 
+                "InstanceTypeId": "ecs.n1.xlarge"
+            }, 
+            {
+                "CpuCoreCount": 16, 
+                "MemorySize": 32.0, 
+                "InstanceTypeFamily": "ecs.n1", 
+                "InstanceTypeId": "ecs.n1.3xlarge"
+            }, 
+            {
+                "CpuCoreCount": 32, 
+                "MemorySize": 64.0, 
+                "InstanceTypeFamily": "ecs.n1", 
+                "InstanceTypeId": "ecs.n1.7xlarge"
+            }, 
+            {
+                "CpuCoreCount": 1, 
+                "MemorySize": 4.0, 
+                "InstanceTypeFamily": "ecs.n2", 
+                "InstanceTypeId": "ecs.n2.small"
+            }, 
+            {
+                "CpuCoreCount": 2, 
+                "MemorySize": 8.0, 
+                "InstanceTypeFamily": "ecs.n2", 
+                "InstanceTypeId": "ecs.n2.medium"
+            }, 
+            {
+                "CpuCoreCount": 4, 
+                "MemorySize": 16.0, 
+                "InstanceTypeFamily": "ecs.n2", 
+                "InstanceTypeId": "ecs.n2.large"
+            }, 
+            {
+                "CpuCoreCount": 8, 
+                "MemorySize": 32.0, 
+                "InstanceTypeFamily": "ecs.n2", 
+                "InstanceTypeId": "ecs.n2.xlarge"
+            }, 
+            {
+                "CpuCoreCount": 16, 
+                "MemorySize": 64.0, 
+                "InstanceTypeFamily": "ecs.n2", 
+                "InstanceTypeId": "ecs.n2.3xlarge"
+            }, 
+            {
+                "CpuCoreCount": 32, 
+                "MemorySize": 128.0, 
+                "InstanceTypeFamily": "ecs.n2", 
+                "InstanceTypeId": "ecs.n2.7xlarge"
+            }, 
+            {
+                "CpuCoreCount": 1, 
+                "MemorySize": 8.0, 
+                "InstanceTypeFamily": "ecs.e3", 
+                "InstanceTypeId": "ecs.e3.small"
+            }, 
+            {
+                "CpuCoreCount": 2, 
+                "MemorySize": 16.0, 
+                "InstanceTypeFamily": "ecs.e3", 
+                "InstanceTypeId": "ecs.e3.medium"
+            }, 
+            {
+                "CpuCoreCount": 4, 
+                "MemorySize": 32.0, 
+                "InstanceTypeFamily": "ecs.e3", 
+                "InstanceTypeId": "ecs.e3.large"
+            }, 
+            {
+                "CpuCoreCount": 8, 
+                "MemorySize": 64.0, 
+                "InstanceTypeFamily": "ecs.e3", 
+                "InstanceTypeId": "ecs.e3.xlarge"
+            }, 
+            {
+                "CpuCoreCount": 16, 
+                "MemorySize": 128.0, 
+                "InstanceTypeFamily": "ecs.e3", 
+                "InstanceTypeId": "ecs.e3.3xlarge"
+            }, 
+            {
+                "CpuCoreCount": 32, 
+                "MemorySize": 256.0, 
+                "InstanceTypeFamily": "ecs.e3", 
+                "InstanceTypeId": "ecs.e3.7xlarge"
+            }
+        ]
+    }, 
+    "RequestId": "9A090998-FD08-4014-9532-F1467A18A256"
+}

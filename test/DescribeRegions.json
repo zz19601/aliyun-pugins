@@ -1,0 +1,43 @@
+{
+    "Regions": {
+        "Region": [
+            {
+                "LocalName": "\u65b0\u52a0\u5761", 
+                "RegionId": "ap-southeast-1"
+            }, 
+            {
+                "LocalName": "\u534e\u5357 1", 
+                "RegionId": "cn-shenzhen"
+            }, 
+            {
+                "LocalName": "\u534e\u5317 1", 
+                "RegionId": "cn-qingdao"
+            }, 
+            {
+                "LocalName": "\u534e\u5317 2", 
+                "RegionId": "cn-beijing"
+            }, 
+            {
+                "LocalName": "\u534e\u4e1c 2", 
+                "RegionId": "cn-shanghai"
+            }, 
+            {
+                "LocalName": "\u7f8e\u4e1c 1", 
+                "RegionId": "us-east-1"
+            }, 
+            {
+                "LocalName": "\u9999\u6e2f", 
+                "RegionId": "cn-hongkong"
+            }, 
+            {
+                "LocalName": "\u534e\u4e1c 1", 
+                "RegionId": "cn-hangzhou"
+            }, 
+            {
+                "LocalName": "\u7f8e\u897f 1", 
+                "RegionId": "us-west-1"
+            }
+        ]
+    }, 
+    "RequestId": "E34DD859-FFE5-4225-A37F-7ECA42EBF0AF"
+}

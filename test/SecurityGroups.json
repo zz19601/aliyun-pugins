@@ -1,0 +1,55 @@
+{
+    "PageSize": 10, 
+    "RegionId": "cn-beijing", 
+    "TotalCount": 4, 
+    "SecurityGroups": {
+        "SecurityGroup": [
+            {
+                "Tags": {
+                    "Tag": []
+                }, 
+                "VpcId": "vpc-25a0ko9h8", 
+                "Description": "", 
+                "SecurityGroupName": "wybTest", 
+                "SecurityGroupId": "sg-25i54ut7u", 
+                "CreationTime": "2016-06-03T09:54:37Z", 
+                "AvailableInstanceAmount": 1000
+            }, 
+            {
+                "Tags": {
+                    "Tag": []
+                }, 
+                "VpcId": "vpc-251sdjfbq", 
+                "Description": "", 
+                "SecurityGroupName": "WybTest", 
+                "SecurityGroupId": "sg-25dhln0m4", 
+                "CreationTime": "2016-05-31T07:12:55Z", 
+                "AvailableInstanceAmount": 1000
+            }, 
+            {
+                "Tags": {
+                    "Tag": []
+                }, 
+                "VpcId": "", 
+                "Description": "System created security group.", 
+                "SecurityGroupName": "sg-25h8tv5i1", 
+                "SecurityGroupId": "sg-25h8tv5i1", 
+                "CreationTime": "2016-05-24T01:22:21Z", 
+                "AvailableInstanceAmount": 999
+            }, 
+            {
+                "Tags": {
+                    "Tag": []
+                }, 
+                "VpcId": "vpc-251sdjfbq", 
+                "Description": "System created security group.", 
+                "SecurityGroupName": "\u5927\u6d0b\u5185\u7f51\u51fa\u4e92\u8054\u7f51\u8bbf\u95ee\u63a7\u5236\u5217\u8868", 
+                "SecurityGroupId": "sg-25ggcchrl", 
+                "CreationTime": "2015-07-01T14:36:39Z", 
+                "AvailableInstanceAmount": 1000
+            }
+        ]
+    }, 
+    "RequestId": "BAD856FC-372D-4867-BC68-35F3D8CAA2D2", 
+    "PageNumber": 1
+}

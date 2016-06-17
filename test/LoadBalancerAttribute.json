@@ -1,0 +1,122 @@
+{
+    "VpcId": "", 
+    "RegionIdAlias": "cn-beijing", 
+    "Address": "182.92.23.156", 
+    "AddressType": "internet", 
+    "Bandwidth": -1, 
+    "LoadBalancerName": "GanSuTai-remote-RDP-SSH", 
+    "ListenerPortsAndProtocal": {
+        "ListenerPortAndProtocal": [
+            {
+                "ListenerPort": 60007, 
+                "ListenerProtocal": "tcp"
+            }, 
+            {
+                "ListenerPort": 60006, 
+                "ListenerProtocal": "tcp"
+            }, 
+            {
+                "ListenerPort": 60005, 
+                "ListenerProtocal": "tcp"
+            }, 
+            {
+                "ListenerPort": 60004, 
+                "ListenerProtocal": "tcp"
+            }, 
+            {
+                "ListenerPort": 60003, 
+                "ListenerProtocal": "tcp"
+            }, 
+            {
+                "ListenerPort": 60002, 
+                "ListenerProtocal": "tcp"
+            }, 
+            {
+                "ListenerPort": 60001, 
+                "ListenerProtocal": "tcp"
+            }
+        ]
+    }, 
+    "SlaveZoneId": "cn-beijing-b", 
+    "RegionId": "cn-beijing-btc-a01", 
+    "CreateTime": "2016-05-23 15:50:05", 
+    "CreateTimeStamp": 1463989805000, 
+    "VSwitchId": "", 
+    "RequestId": "3966D1B1-25FD-456C-962A-FA5F6A79D3AA", 
+    "ListenerPortsAndProtocol": {
+        "ListenerPortAndProtocol": [
+            {
+                "ListenerProtocol": "tcp", 
+                "ListenerPort": 60007
+            }, 
+            {
+                "ListenerProtocol": "tcp", 
+                "ListenerPort": 60006
+            }, 
+            {
+                "ListenerProtocol": "tcp", 
+                "ListenerPort": 60005
+            }, 
+            {
+                "ListenerProtocol": "tcp", 
+                "ListenerPort": 60004
+            }, 
+            {
+                "ListenerProtocol": "tcp", 
+                "ListenerPort": 60003
+            }, 
+            {
+                "ListenerProtocol": "tcp", 
+                "ListenerPort": 60002
+            }, 
+            {
+                "ListenerProtocol": "tcp", 
+                "ListenerPort": 60001
+            }
+        ]
+    }, 
+    "LoadBalancerId": "lb2ze8e8b542ta01pfk4", 
+    "InternetChargeType": "paybytraffic", 
+    "LoadBalancerStatus": "active", 
+    "MasterZoneId": "cn-beijing-a", 
+    "NetworkType": "classic", 
+    "ListenerPorts": {
+        "ListenerPort": [
+            60007, 
+            60006, 
+            60005, 
+            60004, 
+            60003, 
+            60002, 
+            60001
+        ]
+    }, 
+    "BackendServers": {
+        "BackendServer": [
+            {
+                "ServerId": "i-25tsevnyj", 
+                "Weight": 100
+            }, 
+            {
+                "ServerId": "i-25ztuzkqb", 
+                "Weight": 100
+            }, 
+            {
+                "ServerId": "i-25t424ta2", 
+                "Weight": 100
+            }, 
+            {
+                "ServerId": "i-25ru9ylr0", 
+                "Weight": 100
+            }, 
+            {
+                "ServerId": "i-25twhdsn8", 
+                "Weight": 100
+            }, 
+            {
+                "ServerId": "i-25xj3z9n6", 
+                "Weight": 100
+            }
+        ]
+    }
+}

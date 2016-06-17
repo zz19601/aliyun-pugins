@@ -1,0 +1,61 @@
+插件开发说明
+1.总体上参考cloudify-aws-plugin的设计
+core目录下定义了基类
+ecs、vpc、slb目录对应相关资源的实现代码。
+
+2.阿里云账号配置信息
+这个信息可以写在蓝图中，但这样不太安全。
+目前支持写在插件运行所在机器的~/.aliyuncli目录下的两个配置文件中，参考：
+cloudify-aliyun-plugin\test\.aliyuncli目录下的文件例子
+注意这个账号信息不要泄露
+Windows本地测试时，在C:\Users\{UserName}\.aliyuncli目录下
+Manager目前使用root用户
+执行阿里云cli的	configure命令，会自动生成该文件，参考下面“4.阿里云SDK cli工具”部分。
+
+3.测试：
+采用tox、nose相关工具
+相关测试代码参考cloudify-aliyun-plugin\vpc\tests
+cloudify-aliyun-plugin\tox.ini里面的flake8测试环境是语法检查, py27测试环境是本地单元和集成测试
+先使用pip安装tox： pip install tox
+在cloudify-aliyun-plugin目录下，执行： tox命令
+实现了新的资源后，需要修改现有的测试蓝图，或者写新的测试代码。
+
+4.阿里云SDK cli工具
+参考：
+https://help.aliyun.com/document_detail/29995.html
+需要Python 2.6.6 或更高版本、pip
+安装cli：
+pip install aliyuncli
+如果pip安装不正常，pip命令可能无法执行，可以运行python -m pip install aliyuncli
+安装相关SDK包：
+pip install aliyun-python-sdk-ecs
+pip install aliyun-python-sdk-slb
+配置登录参数，可以多次配置，信息明文保存在~/.aliyuncli目录下：
+aliyuncli configure
+命令例子：
+aliyuncli sdk模块名 请求名 [参数]，如
+aliyuncli ecs  DescribeVpcs
+aliyuncli ecs  DeleteVpc --VpcId vpc-25q1z131s
+aliyuncli ecs  DescribeVSwitches --VpcId vpc-25t09nupb
+
+
+
+5.插件打包和上传Manager
+本地测试通过后，再执行插件打包和上传操作
+使用wagon工具打包为Cloudify插件，先按照wagon: pip install wagon
+参考https://github.com/cloudify-cosmo/wagon
+该插件部署在Manager端，而不是部署在Host中
+将插件源码目录上传到Manager所在机器某个目录下，如/root/wagon/cloudify-aliyun-plugin目录
+在另一个目录中，执行打包操作：
+如在/root/wagon/package目录中，执行：
+# wagon create -s ~/wagon/cloudify-aliyun-plugin/ -r --keep-wheels
+会在当前目录下生成打包后的插件：
+cloudify_aliyun_plugin-0.1.1-py27-none-linux_x86_64-centos-Core.wgn
+
+然后在cfy命令行中，上传插件：
+cfy plugins upload -p /full/path/to/pluginxxx.wgn
+要更新插件的话，如果没有更新版本号，需要先根据ID删除之前的插件，然后上传
+使用cfy plugins list列出已有插件
+不同版本的相同插件可以并存，在蓝图中可以指定插件的版本，不指定的话使用最新版本
+
+

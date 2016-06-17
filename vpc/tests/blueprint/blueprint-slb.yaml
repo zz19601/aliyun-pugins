@@ -1,0 +1,129 @@
+# DSL version, should appear in the main blueprint.yaml
+# and may appear in other imports. In such case, the versions must match
+tosca_definitions_version: cloudify_dsl_1_2
+
+imports:
+  - types.yaml
+  - plugin.yaml
+
+inputs:
+    # example input that could be injected by test
+    existing_vpc_id:
+        default: vpc-251sdjfbq
+    existing_subnet_id:
+        default: vsw-2525wuma8
+    existing_vm1:
+        # CRE-3
+        default: i-25f6vzpoq
+    existing_vm2:
+        # CRE-2
+        default: i-25pc1mq9b
+    existing_slb:
+        default: 15548d20c30-cn-beijing-btc-a01
+
+node_templates:
+  existing_vpc:
+    type: cloudify.aliyun.nodes.VPC
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_vpc_id }
+      cidr_block: 
+
+  existing_subnet:
+    type: cloudify.aliyun.nodes.Subnet
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_subnet_id }
+      cidr_block: 
+    relationships:
+      - type: cloudify.aliyun.relationships.subnet_contained_in_vpc
+        target: existing_vpc
+  exist_vm1:
+    type: cloudify.aliyun.nodes.Instance
+    properties:
+      agent_config:
+        install_method: none
+        # for basic test, not install agent now
+      use_external_resource: true
+      resource_id: { get_input: existing_vm1 }
+      image_id: 
+      instance_type: 
+    relationships:
+      - type: cloudify.aliyun.relationships.instance_contained_in_subnet
+        target: existing_subnet
+      - type: cloudify.aliyun.relationships.instance_connected_to_load_balancer
+        target: new_load_balancer
+        source_interfaces:
+          cloudify.interfaces.relationship_lifecycle:
+            establish:
+              implementation: aliyun.slb.slb.add_instance_to_slb
+              inputs:
+                weight: 100
+
+  exist_vm2:
+    type: cloudify.aliyun.nodes.Instance
+    properties:
+      agent_config:
+        install_method: none
+        # for basic test, not install agent now
+      use_external_resource: true
+      resource_id: { get_input: existing_vm2 }
+      image_id: 
+      instance_type: 
+    relationships:
+      - type: cloudify.aliyun.relationships.instance_contained_in_subnet
+        target: existing_subnet
+      - type: cloudify.aliyun.relationships.instance_connected_to_load_balancer
+        target: new_load_balancer
+        source_interfaces:
+          cloudify.interfaces.relationship_lifecycle:
+            establish:
+              implementation: aliyun.slb.slb.add_instance_to_slb
+              inputs:
+                weight: 50
+  new_load_balancer:
+    type: cloudify.aliyun.nodes.ServerLoadBalancer
+    properties:
+      use_external_resource: false
+      resource_id: 
+      # { get_input: existing_slb }
+      slb_name: wybTest1-intranet
+      address_type: intranet
+      listeners:
+        - protocol: tcp
+          listener_port: 100
+          backend_server_port: 100
+          band_width: 5
+          scheduler: wrr
+          # wrr | wlc
+          others: 
+            PersistenceTimeout: 120
+        - protocol: http
+          listener_port: 80
+          backend_server_port: 8080
+          band_width: 50
+          scheduler: wrr
+          health_check: off
+          others: 
+            StickySession: on
+            # 'on' | 'off'
+            StickySessionType: insert
+            # insert | server
+            CookieTimeout: 600
+            #  1-86400 s
+        - protocol: tcp
+          # if use https, need upload Server Certificate, seems unsafe (plugin not support yet) 
+          # and set ServerCertificateId
+          listener_port: 443
+          backend_server_port: 443
+          band_width: 50
+          scheduler: wrr
+          # wrr | wlc
+    relationships:
+      - type: cloudify.aliyun.relationships.slb_contained_in_subnet
+        target: existing_subnet
+
+outputs:
+    # example output the could be used to simplify assertions by test
+    new_load_balancer:
+        value: { get_attribute: [new_load_balancer, aliyun_resource_id] }

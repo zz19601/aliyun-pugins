@@ -1,0 +1,2 @@
+cloudify-dsl-parser>=3.3.1
+nose

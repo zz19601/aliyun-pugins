@@ -1,0 +1,632 @@
+{
+    "TotalCount": 44, 
+    "PageNumber": 1, 
+    "RequestId": "CBD6936C-8A08-4FF9-B051-0A3449BED8CB", 
+    "PageSize": 10, 
+    "Instances": {
+        "Instance": [
+        {
+    "AutoReleaseTime": "",
+    "RegionId": "cn-beijing",
+    "SerialNumber": "f0df53fd-f36d-4e64-9da8-8e6e3eaab945",
+    "CreationTime": "2016-06-06T03:08Z",
+    "ExpiredTime": "2099-12-31T15:59Z",
+    "IoOptimized": false,
+    "PublicIpAddress": {
+        "IpAddress": []
+    },
+    "InternetChargeType": "",
+    "VpcAttributes": {
+        "VpcId": "vpc-25a0ko9h8",
+        "VSwitchId": "vsw-25viu1g0n",
+        "PrivateIpAddress": {
+            "IpAddress": [
+                "172.16.0.1"
+            ]
+        },
+        "NatIpAddress": "10.175.87.71"
+    },
+    "Status": "Running",
+    "Description": "",
+    "InstanceId": "i-25k0g9ps1",
+    "HostName": "iZ25k0g9ps1Z",
+    "ClusterId": "",
+    "ImageId": "centos7u0_64_40G_aliaegis_20160120.vhd",
+    "InstanceTypeFamily": "ecs.t1",
+    "InstanceNetworkType": "vpc",
+    "InstanceType": "ecs.t1.small",
+    "EipAddress": {
+        "InternetChargeType": "",
+        "IpAddress": "",
+        "AllocationId": ""
+    },
+    "InnerIpAddress": {
+        "IpAddress": []
+    },
+    "OperationLocks": {
+        "LockReason": []
+    },
+    "InstanceChargeType": "PostPaid",
+    "SecurityGroupIds": {
+        "SecurityGroupId": [
+            "sg-25i54ut7u"
+        ]
+    },
+    "InternetMaxBandwidthOut": 0,
+    "ZoneId": "cn-beijing-a",
+    "InstanceName": "wybTest",
+    "Cpu": 1,
+    "InternetMaxBandwidthIn": 0,
+    "VlanId": "",
+    "Memory": 1024,
+    "DeviceAvailable": true
+}
+            {
+                "AutoReleaseTime": "", 
+                "RegionId": "cn-beijing", 
+                "SerialNumber": "d502e14a-4a09-4e4a-b660-91f744ca4504", 
+                "CreationTime": "2016-06-02T14:32Z", 
+                "ExpiredTime": "2016-07-02T16:00Z", 
+                "IoOptimized": false, 
+                "PublicIpAddress": {
+                    "IpAddress": []
+                }, 
+                "InternetChargeType": "", 
+                "VpcAttributes": {
+                    "VpcId": "vpc-251sdjfbq", 
+                    "VSwitchId": "vsw-25snl04b2", 
+                    "PrivateIpAddress": {
+                        "IpAddress": [
+                            "192.168.3.1"
+                        ]
+                    }, 
+                    "NatIpAddress": "10.175.78.215"
+                }, 
+                "Status": "Running", 
+                "Description": "", 
+                "InstanceId": "i-25unb58ag", 
+                "HostName": "iZ25unb58agZ", 
+                "ClusterId": "", 
+                "ImageId": "win2008_64_stand_r2_cn_40G_alibase_20150429.vhd", 
+                "InstanceTypeFamily": "ecs.s3", 
+                "InstanceNetworkType": "vpc", 
+                "InstanceType": "ecs.s3.large", 
+                "EipAddress": {
+                    "InternetChargeType": "", 
+                    "IpAddress": "", 
+                    "AllocationId": ""
+                }, 
+                "InnerIpAddress": {
+                    "IpAddress": []
+                }, 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceChargeType": "PrePaid", 
+                "SecurityGroupIds": {
+                    "SecurityGroupId": [
+                        "sg-25ggcchrl"
+                    ]
+                }, 
+                "InternetMaxBandwidthOut": 0, 
+                "ZoneId": "cn-beijing-a", 
+                "InstanceName": "TuWen-1", 
+                "Cpu": 4, 
+                "InternetMaxBandwidthIn": -1, 
+                "VlanId": "", 
+                "Memory": 8192, 
+                "DeviceAvailable": true
+            }, 
+            {
+                "AutoReleaseTime": "", 
+                "RegionId": "cn-beijing", 
+                "SerialNumber": "428ef457-8ce9-4412-9934-79bbda1d7d80", 
+                "CreationTime": "2016-05-27T02:20Z", 
+                "ExpiredTime": "2099-12-31T15:59Z", 
+                "IoOptimized": false, 
+                "PublicIpAddress": {
+                    "IpAddress": []
+                }, 
+                "InternetChargeType": "", 
+                "VpcAttributes": {
+                    "VpcId": "vpc-251sdjfbq", 
+                    "VSwitchId": "vsw-2525wuma8", 
+                    "PrivateIpAddress": {
+                        "IpAddress": [
+                            "192.168.1.56"
+                        ]
+                    }, 
+                    "NatIpAddress": "10.175.91.138"
+                }, 
+                "Status": "Stopped", 
+                "Description": "", 
+                "InstanceId": "i-25ok6mpoq", 
+                "HostName": "iZ25ok6mpoqZ", 
+                "ClusterId": "", 
+                "ImageId": "m-25e09lj9z", 
+                "InstanceTypeFamily": "ecs.s3", 
+                "InstanceNetworkType": "vpc", 
+                "InstanceType": "ecs.s3.medium", 
+                "EipAddress": {
+                    "InternetChargeType": "PayByBandwidth", 
+                    "IsSupportUnassociate": false, 
+                    "IpAddress": "123.56.12.116", 
+                    "AllocationId": "eip-25n291snp", 
+                    "Bandwidth": 20
+                }, 
+                "InnerIpAddress": {
+                    "IpAddress": []
+                }, 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceChargeType": "PostPaid", 
+                "SecurityGroupIds": {
+                    "SecurityGroupId": [
+                        "sg-25ggcchrl"
+                    ]
+                }, 
+                "InternetMaxBandwidthOut": 0, 
+                "ZoneId": "cn-beijing-a", 
+                "InstanceName": "VPN-DR", 
+                "Cpu": 4, 
+                "InternetMaxBandwidthIn": -1, 
+                "VlanId": "", 
+                "Memory": 4096, 
+                "DeviceAvailable": true
+            }, 
+            {
+                "AutoReleaseTime": "", 
+                "RegionId": "cn-beijing", 
+                "SerialNumber": "38d25d34-30a4-4344-a99e-5f37e026f36d", 
+                "CreationTime": "2016-05-24T06:05Z", 
+                "ExpiredTime": "2016-06-24T16:00Z", 
+                "IoOptimized": false, 
+                "PublicIpAddress": {
+                    "IpAddress": []
+                }, 
+                "InternetChargeType": "", 
+                "VpcAttributes": {
+                    "VpcId": "vpc-251sdjfbq", 
+                    "VSwitchId": "vsw-2525wuma8", 
+                    "PrivateIpAddress": {
+                        "IpAddress": [
+                            "192.168.1.48"
+                        ]
+                    }, 
+                    "NatIpAddress": "10.175.66.254"
+                }, 
+                "Status": "Running", 
+                "Description": "", 
+                "InstanceId": "i-25x9olgi9", 
+                "HostName": "iZ25x9olgi9Z", 
+                "ClusterId": "", 
+                "ImageId": "win2008_64_stand_r2_cn_40G_alibase_20150429.vhd", 
+                "InstanceTypeFamily": "ecs.c1", 
+                "InstanceNetworkType": "vpc", 
+                "InstanceType": "ecs.c1.small", 
+                "EipAddress": {
+                    "InternetChargeType": "", 
+                    "IpAddress": "", 
+                    "AllocationId": ""
+                }, 
+                "InnerIpAddress": {
+                    "IpAddress": []
+                }, 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceChargeType": "PrePaid", 
+                "SecurityGroupIds": {
+                    "SecurityGroupId": [
+                        "sg-25ggcchrl"
+                    ]
+                }, 
+                "InternetMaxBandwidthOut": 0, 
+                "ZoneId": "cn-beijing-a", 
+                "InstanceName": "oracle-test-win2008R2", 
+                "Cpu": 8, 
+                "InternetMaxBandwidthIn": -1, 
+                "VlanId": "", 
+                "Memory": 8192, 
+                "DeviceAvailable": true
+            }, 
+            {
+                "AutoReleaseTime": "", 
+                "RegionId": "cn-beijing", 
+                "SerialNumber": "052b85b3-db38-4c04-b2ba-720961cd2ef6", 
+                "CreationTime": "2016-05-24T02:27Z", 
+                "ExpiredTime": "2016-06-24T16:00Z", 
+                "IoOptimized": false, 
+                "PublicIpAddress": {
+                    "IpAddress": []
+                }, 
+                "InternetChargeType": "", 
+                "VpcAttributes": {
+                    "VpcId": "vpc-251sdjfbq", 
+                    "VSwitchId": "vsw-25wyqsv8v", 
+                    "PrivateIpAddress": {
+                        "IpAddress": [
+                            "192.168.4.8"
+                        ]
+                    }, 
+                    "NatIpAddress": "10.175.89.6"
+                }, 
+                "Status": "Stopped", 
+                "Description": "", 
+                "InstanceId": "i-25fcgwkno", 
+                "HostName": "iZ25fcgwknoZ", 
+                "ClusterId": "", 
+                "ImageId": "m-25olshfmh", 
+                "InstanceTypeFamily": "ecs.s3", 
+                "InstanceNetworkType": "vpc", 
+                "InstanceType": "ecs.s3.large", 
+                "EipAddress": {
+                    "InternetChargeType": "PayByTraffic", 
+                    "IsSupportUnassociate": false, 
+                    "IpAddress": "123.56.12.76", 
+                    "AllocationId": "eip-250j67en9", 
+                    "Bandwidth": 100
+                }, 
+                "InnerIpAddress": {
+                    "IpAddress": []
+                }, 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceChargeType": "PrePaid", 
+                "SecurityGroupIds": {
+                    "SecurityGroupId": [
+                        "sg-25ggcchrl"
+                    ]
+                }, 
+                "InternetMaxBandwidthOut": 0, 
+                "ZoneId": "cn-beijing-a", 
+                "InstanceName": "VPN-WOC-new", 
+                "Cpu": 4, 
+                "InternetMaxBandwidthIn": -1, 
+                "VlanId": "", 
+                "Memory": 8192, 
+                "DeviceAvailable": true
+            }, 
+            {
+                "AutoReleaseTime": "", 
+                "RegionId": "cn-beijing", 
+                "SerialNumber": "24167884-8ca2-4ef0-bbc3-4d28bc66d4c4", 
+                "CreationTime": "2016-05-24T01:22Z", 
+                "ExpiredTime": "2016-06-24T16:00Z", 
+                "IoOptimized": false, 
+                "PublicIpAddress": {
+                    "IpAddress": [
+                        "123.57.152.73"
+                    ]
+                }, 
+                "InternetChargeType": "PayByTraffic", 
+                "VpcAttributes": {
+                    "VpcId": "", 
+                    "VSwitchId": "", 
+                    "PrivateIpAddress": {
+                        "IpAddress": []
+                    }, 
+                    "NatIpAddress": ""
+                }, 
+                "Status": "Stopped", 
+                "Description": "", 
+                "InstanceId": "i-252h5sbi4", 
+                "HostName": "iZ252h5sbi4Z", 
+                "ClusterId": "", 
+                "ImageId": "m-25olshfmh", 
+                "InstanceTypeFamily": "ecs.s3", 
+                "InstanceNetworkType": "classic", 
+                "InstanceType": "ecs.s3.large", 
+                "EipAddress": {
+                    "InternetChargeType": "", 
+                    "IpAddress": "", 
+                    "AllocationId": ""
+                }, 
+                "InnerIpAddress": {
+                    "IpAddress": [
+                        "10.172.165.147"
+                    ]
+                }, 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceChargeType": "PrePaid", 
+                "SecurityGroupIds": {
+                    "SecurityGroupId": [
+                        "sg-25h8tv5i1"
+                    ]
+                }, 
+                "InternetMaxBandwidthOut": 100, 
+                "ZoneId": "cn-beijing-a", 
+                "InstanceName": "VPN-WOC", 
+                "Cpu": 4, 
+                "InternetMaxBandwidthIn": -1, 
+                "VlanId": "", 
+                "Memory": 8192, 
+                "DeviceAvailable": true
+            }, 
+            {
+                "AutoReleaseTime": "", 
+                "RegionId": "cn-beijing", 
+                "SerialNumber": "2a05a6e1-a447-4a82-9402-0985bd19cd5b", 
+                "CreationTime": "2016-05-23T10:06Z", 
+                "ExpiredTime": "2016-06-23T16:00Z", 
+                "IoOptimized": false, 
+                "PublicIpAddress": {
+                    "IpAddress": []
+                }, 
+                "InternetChargeType": "", 
+                "VpcAttributes": {
+                    "VpcId": "vpc-251sdjfbq", 
+                    "VSwitchId": "vsw-2525wuma8", 
+                    "PrivateIpAddress": {
+                        "IpAddress": [
+                            "192.168.1.46"
+                        ]
+                    }, 
+                    "NatIpAddress": "10.175.86.191"
+                }, 
+                "Status": "Running", 
+                "Description": "", 
+                "InstanceId": "i-2538bhacs", 
+                "HostName": "iZ2538bhacsZ", 
+                "ClusterId": "", 
+                "ImageId": "centos6u5_64_40G_aliaegis_20160222.vhd", 
+                "InstanceTypeFamily": "ecs.c1", 
+                "InstanceNetworkType": "vpc", 
+                "InstanceType": "ecs.c1.large", 
+                "EipAddress": {
+                    "InternetChargeType": "", 
+                    "IpAddress": "", 
+                    "AllocationId": ""
+                }, 
+                "InnerIpAddress": {
+                    "IpAddress": []
+                }, 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceChargeType": "PrePaid", 
+                "SecurityGroupIds": {
+                    "SecurityGroupId": [
+                        "sg-25ggcchrl"
+                    ]
+                }, 
+                "InternetMaxBandwidthOut": 0, 
+                "ZoneId": "cn-beijing-a", 
+                "InstanceName": "oracle-1-test", 
+                "Cpu": 8, 
+                "InternetMaxBandwidthIn": -1, 
+                "VlanId": "", 
+                "Memory": 16384, 
+                "DeviceAvailable": true
+            }, 
+            {
+                "AutoReleaseTime": "", 
+                "RegionId": "cn-beijing", 
+                "SerialNumber": "41bda96b-370e-44ea-b021-8515dea05797", 
+                "CreationTime": "2016-05-23T10:06Z", 
+                "ExpiredTime": "2016-06-23T16:00Z", 
+                "IoOptimized": false, 
+                "PublicIpAddress": {
+                    "IpAddress": []
+                }, 
+                "InternetChargeType": "", 
+                "VpcAttributes": {
+                    "VpcId": "vpc-251sdjfbq", 
+                    "VSwitchId": "vsw-2525wuma8", 
+                    "PrivateIpAddress": {
+                        "IpAddress": [
+                            "192.168.1.47"
+                        ]
+                    }, 
+                    "NatIpAddress": "10.175.73.102"
+                }, 
+                "Status": "Running", 
+                "Description": "", 
+                "InstanceId": "i-25q32030u", 
+                "HostName": "iZ25q32030uZ", 
+                "ClusterId": "", 
+                "ImageId": "centos6u5_64_40G_aliaegis_20160222.vhd", 
+                "InstanceTypeFamily": "ecs.c1", 
+                "InstanceNetworkType": "vpc", 
+                "InstanceType": "ecs.c1.large", 
+                "EipAddress": {
+                    "InternetChargeType": "", 
+                    "IpAddress": "", 
+                    "AllocationId": ""
+                }, 
+                "InnerIpAddress": {
+                    "IpAddress": []
+                }, 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceChargeType": "PrePaid", 
+                "SecurityGroupIds": {
+                    "SecurityGroupId": [
+                        "sg-25ggcchrl"
+                    ]
+                }, 
+                "InternetMaxBandwidthOut": 0, 
+                "ZoneId": "cn-beijing-a", 
+                "InstanceName": "oracle-2-test", 
+                "Cpu": 8, 
+                "InternetMaxBandwidthIn": -1, 
+                "VlanId": "", 
+                "Memory": 16384, 
+                "DeviceAvailable": true
+            }, 
+            {
+                "AutoReleaseTime": "", 
+                "RegionId": "cn-beijing", 
+                "SerialNumber": "5e146e9d-79ec-4dc2-bf25-4bd6708be6bc", 
+                "CreationTime": "2016-05-23T07:21Z", 
+                "ExpiredTime": "2016-06-23T16:00Z", 
+                "IoOptimized": false, 
+                "PublicIpAddress": {
+                    "IpAddress": []
+                }, 
+                "InternetChargeType": "", 
+                "VpcAttributes": {
+                    "VpcId": "vpc-251sdjfbq", 
+                    "VSwitchId": "vsw-25wyqsv8v", 
+                    "PrivateIpAddress": {
+                        "IpAddress": [
+                            "192.168.4.6"
+                        ]
+                    }, 
+                    "NatIpAddress": "10.175.76.23"
+                }, 
+                "Status": "Running", 
+                "Description": "", 
+                "InstanceId": "i-25xj3z9n6", 
+                "HostName": "iZ25xj3z9n6Z", 
+                "ClusterId": "", 
+                "ImageId": "win2008_64_stand_r2_cn_40G_alibase_20150429.vhd", 
+                "InstanceTypeFamily": "ecs.s3", 
+                "InstanceNetworkType": "vpc", 
+                "InstanceType": "ecs.s3.medium", 
+                "EipAddress": {
+                    "InternetChargeType": "", 
+                    "IpAddress": "", 
+                    "AllocationId": ""
+                }, 
+                "InnerIpAddress": {
+                    "IpAddress": []
+                }, 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceChargeType": "PrePaid", 
+                "SecurityGroupIds": {
+                    "SecurityGroupId": [
+                        "sg-25ggcchrl"
+                    ]
+                }, 
+                "InternetMaxBandwidthOut": 0, 
+                "ZoneId": "cn-beijing-a", 
+                "InstanceName": "\u7518\u8083-CRE-2", 
+                "Cpu": 4, 
+                "InternetMaxBandwidthIn": -1, 
+                "VlanId": "", 
+                "Memory": 4096, 
+                "DeviceAvailable": true
+            }, 
+            {
+                "AutoReleaseTime": "", 
+                "RegionId": "cn-beijing", 
+                "SerialNumber": "642c3d18-bf75-4e9d-8681-4fbe40225935", 
+                "CreationTime": "2016-05-23T07:21Z", 
+                "ExpiredTime": "2016-06-23T16:00Z", 
+                "IoOptimized": false, 
+                "PublicIpAddress": {
+                    "IpAddress": []
+                }, 
+                "InternetChargeType": "", 
+                "VpcAttributes": {
+                    "VpcId": "vpc-251sdjfbq", 
+                    "VSwitchId": "vsw-25wyqsv8v", 
+                    "PrivateIpAddress": {
+                        "IpAddress": [
+                            "192.168.4.7"
+                        ]
+                    }, 
+                    "NatIpAddress": "10.175.65.182"
+                }, 
+                "Status": "Running", 
+                "Description": "", 
+                "InstanceId": "i-25twhdsn8", 
+                "HostName": "iZ25twhdsn8Z", 
+                "ClusterId": "", 
+                "ImageId": "win2008_64_stand_r2_cn_40G_alibase_20150429.vhd", 
+                "InstanceTypeFamily": "ecs.s3", 
+                "InstanceNetworkType": "vpc", 
+                "InstanceType": "ecs.s3.medium", 
+                "EipAddress": {
+                    "InternetChargeType": "", 
+                    "IpAddress": "", 
+                    "AllocationId": ""
+                }, 
+                "InnerIpAddress": {
+                    "IpAddress": []
+                }, 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceChargeType": "PrePaid", 
+                "SecurityGroupIds": {
+                    "SecurityGroupId": [
+                        "sg-25ggcchrl"
+                    ]
+                }, 
+                "InternetMaxBandwidthOut": 0, 
+                "ZoneId": "cn-beijing-a", 
+                "InstanceName": "\u7518\u8083-CRE-3", 
+                "Cpu": 4, 
+                "InternetMaxBandwidthIn": -1, 
+                "VlanId": "", 
+                "Memory": 4096, 
+                "DeviceAvailable": true
+            }, 
+            {
+                "AutoReleaseTime": "", 
+                "RegionId": "cn-beijing", 
+                "SerialNumber": "9b1e1c14-8e9f-4526-819e-df170c64a056", 
+                "CreationTime": "2016-05-23T06:56Z", 
+                "ExpiredTime": "2016-06-23T16:00Z", 
+                "IoOptimized": false, 
+                "PublicIpAddress": {
+                    "IpAddress": []
+                }, 
+                "InternetChargeType": "", 
+                "VpcAttributes": {
+                    "VpcId": "vpc-251sdjfbq", 
+                    "VSwitchId": "vsw-25wyqsv8v", 
+                    "PrivateIpAddress": {
+                        "IpAddress": [
+                            "192.168.4.5"
+                        ]
+                    }, 
+                    "NatIpAddress": "10.175.87.113"
+                }, 
+                "Status": "Running", 
+                "Description": "", 
+                "InstanceId": "i-25ru9ylr0", 
+                "HostName": "iZ25ru9ylr0Z", 
+                "ClusterId": "", 
+                "ImageId": "win2008_64_stand_r2_cn_40G_alibase_20150429.vhd", 
+                "InstanceTypeFamily": "ecs.s3", 
+                "InstanceNetworkType": "vpc", 
+                "InstanceType": "ecs.s3.large", 
+                "EipAddress": {
+                    "InternetChargeType": "", 
+                    "IpAddress": "", 
+                    "AllocationId": ""
+                }, 
+                "InnerIpAddress": {
+                    "IpAddress": []
+                }, 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceChargeType": "PrePaid", 
+                "SecurityGroupIds": {
+                    "SecurityGroupId": [
+                        "sg-25ggcchrl"
+                    ]
+                }, 
+                "InternetMaxBandwidthOut": 0, 
+                "ZoneId": "cn-beijing-a", 
+                "InstanceName": "\u7518\u8083-NAS", 
+                "Cpu": 4, 
+                "InternetMaxBandwidthIn": -1, 
+                "VlanId": "", 
+                "Memory": 8192, 
+                "DeviceAvailable": true
+            }
+        ]
+    }
+}

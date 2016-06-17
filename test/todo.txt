@@ -1,0 +1,156 @@
+1.SecurityGroup
+aliyun ecs相关命令请求代码，包括ecs、vpc等，参考：
+C:\Python27\Lib\site-packages\aliyunsdkecs\request\v20140526
+API 文档，参考：https://help.aliyun.com/document_detail/25553.html
+RegionId参数不需要单独传入，默认与cllient中的RegionID一致
+
+阿里云控制台登录URL：https://signin.aliyun.com/dayang/login.htm
+
+cloudify.aliyun.nodes.SecurityGroup该对象包含了描述和规则，对应不同的API
+暂时只考虑VPC下的安全组，即该对象必须通过cloudify.aliyun.relationships.security_group_contained_in_vpc
+与某个VPC关联
+该对象的创建和删除，参考subnet相关逻辑
+
+测试蓝图配置：
+1.配置一个存在的VPC资源： existing_vpc
+2.配置一个存在的安全组资源，包含在existing_vpc中
+3.配置一个新的安全组资源，包含安全组规则定义，包含在existing_vpc中
+
+测试install流程、uninstall流程。Uninstall后新创建的资源删除。
+
+2.ElasticIP
+如果domain参数为VPC，对应AllocateEipAddress弹性公网IP，对应VPC实例，测试时先实现这种类型
+与AllocatePublicIpAddress分配公网 IP 地址不同，后者指对应经典网络
+ElasticIP可以动态绑定到不同实例
+默认选择按流量计费（创建后会有保有费）:
+
+测试蓝图配置：
+1.配置一个已存在的EIP资源
+2.配置一个新的EIP资源
+支持实例后测试：
+3.配置一个已存在的Instance
+4.实例与EIP通过instance_connected_to_elastic_ip关系进行关联(前提是两者的区域要相同)
+测试install流程、uninstall流程。Uninstall后新创建的资源删除。
+
+3.Instance
+暂时只考虑VPC实例
+配置相关：
+	使用最小配置
+	计费：使用按量付费！
+	专有网络
+	安全组：默认
+	外网带宽最小1MB，不设置的话没有外网IP
+	镜像：CentOS7
+	存储：系统盘，数据盘后续单独配置
+	设置密码（不支持keyPair）
+
+		
+实例创建测试完成后，尽快删除
+
+测试蓝图配置：
+1.配置一个已存在的实例资源
+2.配置一个新的实例资源，与已存在的subnet关联
+3.实例与EIP关联
+测试install流程、uninstall流程。Uninstall后新创建的资源删除。
+
+4.Volume资源
+
+测试蓝图配置：
+1.配置一个已存在的Volumn资源，与已存在的instance关联
+2.配置一个新的Volumn资源，与已存在的instance关联
+测试install流程、uninstall流程。Uninstall后新创建的资源删除。
+
+5.SLB资源
+
+6.其他
+1.支持不同资源设置不同Region？
+优先使用cloudify.datatypes.aliyun.Config中的属性，如Region
+
+7.问题：
+1）执行tox报错：
+File "c:\work\src\cloudify\cloudify-plugin-template\src\cloudify-plugins-common\cloudify\workflows\local.py", line 243, in _get_module_method
+    .format(module_name, node_name, tpe))
+ImportError: mapping error: No module named ecs.instance [node=new_vm, type=operations]
+为什么引用了这个路径下的cloudify-plugins-common?
+手动设置PYTHONPATH也是相同错误。
+set PYTHONPATH=C:\work\src\cloudify\cloudify-aliyun-plugin;C:\Users\sys\Clouaify_Agent\env\Lib\site-packages
+后来手动执行python ecs\instance.py，报错：
+Traceback (most recent call last):
+  File "ecs\instance.py", line 6, in <module>
+    from aliyunsdkecs.request.v20140526 import \
+ImportError: cannot import name DeleteInstancRequest
+原来是这个文件中DeleteInstancRequest写错了，导致ecs.instance模块不能导入
+
+ERROR: :param cfy_local:
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "c:\work\src\cloudify\cloudify-plugin-template\src\cloudify-plugins-common\cloudify\test_utils\local_workflow_decorator.py", line 258, in wrapped_test
+    test_env = self.set_up(func_self)
+  File "c:\work\src\cloudify\cloudify-plugin-template\src\cloudify-plugins-common\cloudify\test_utils\local_workflow_decorator.py", line 237, in set_up
+    test_env = local.init_env(temp_blueprint_path, **self.init_args)
+  File "c:\work\src\cloudify\cloudify-plugin-template\src\cloudify-plugins-common\cloudify\workflows\local.py", line 157, in init_env
+    validate_version=validate_version)
+  File "c:\work\src\cloudify\cloudify-plugin-template\src\cloudify-plugins-common\cloudify\workflows\local.py", line 67, in __init__
+    validate_version)
+  File "c:\work\src\cloudify\cloudify-plugin-template\src\cloudify-plugins-common\cloudify\workflows\local.py", line 183, in _parse_plan
+    _prepare_nodes_and_instances(nodes, node_instances, ignored_modules)
+  File "c:\work\src\cloudify\cloudify-plugin-template\src\cloudify-plugins-common\cloudify\workflows\local.py", line 216, in _prepare_nodes_and_instances
+    scan(node, 'operations', node)
+  File "c:\work\src\cloudify\cloudify-plugin-template\src\cloudify-plugins-common\cloudify\workflows\local.py", line 208, in scan
+    ignored_modules=ignored_modules)
+  File "c:\work\src\cloudify\cloudify-plugin-template\src\cloudify-plugins-common\cloudify\workflows\local.py", line 243, in _get_module_method
+    .format(module_name, node_name, tpe))
+ImportError: mapping error: No module named ecs.instance [node=new_vm, type=operations]
+为什么引用了这个路径下的cloudify-plugins-common?
+手动设置PYTHONPATH试试
+set PYTHONPATH=C:\work\src\cloudify\cloudify-aliyun-plugin;C:\Users\sys\Clouaify_Agent\env\Lib\site-packages
+
+2）NonRecoverableError: Request <aliyunsdkecs.request.v20140526.
+CreateInstanceRequest.CreateInstanceRequest object at 0x0446E990> returned error, 
+Code:InvalidNetworkType.Mismatch,
+Msg:Specified parameter "InternetMaxBandwidthIn"
+or "InternetMaxBandwidthOut" conflict with instance network type..
+
+流入带宽不计费，InternetMaxBandwidthIn参数默认是最大值200
+改为PayByBandwidth
+
+aliyuncli ecs CreateInstance --InstanceName wybTest --InstanceChargeType PostPaid --Password TestdaYanG123 --InternetChargeType PayByTraffic --SystemDisk.Size 40 --SecurityGroupId sg-25i54ut7u --VSwitchId vsw-25viu1g0n --ImageId centos7u0_64_40G_aliaegis_20160120.vhd --InstanceType ecs.t1.small --InternetMaxBandwidthOut 1 
+去掉InternetMaxBandwidthOut参数才行，因为没有设置外网IP，InternetChargeType参数不起作用，创建后值为空
+
+aliyuncli ecs  ModifyInstanceVncPasswd --InstanceId i-25inp4k9o --VncPassword daYang
+
+aliyuncli ecs DescribeInstances --InstanceName wybTest
+
+{
+    "InstanceId": "i-25k0g9ps1",
+    "RequestId": "0C121D23-6B1E-437A-A451-19750207AD27"
+}
+
+
+3）出错后输出请求id，可能便于定位错误：
+{
+    "Code": "InvalidInstanceName.Malformed",
+    "Message": "The specified parameter \"InstanceName\" is not valid.",
+    "HostId": "ecs-cn-hangzhou.aliyuncs.com",
+    "RequestId": "B35A5AA6-E94A-4489-845F-82BA2A730FA9"
+}
+4）AllocateEipAddress相关
+aliyuncli ecs AllocateEipAddress --Bandwidth 100 --InternetChargeType PayByTraffic
+aliyuncli ecs DescribeEipAddresses --PageSize 50
+
+"IpAddress": "123.56",
+"AllocationId": "eip-25g8uslmt"
+i-25inp4k9o
+aliyuncli ecs AssociateEipAddress --AllocationId eip-25g8uslmt --InstanceId i-25inp4k9o 
+--InstanceType EcsInstance | HaVip
+
+i-25b0q04io
+5）有时等待实例为ready状态时比较慢，重试5次还不行
+看系统默认重试间隔和次数在哪里设置，默认间隔5s
+
+6)EIP,运行属性设置，与aws、OpenStack插件保持一致
+aws与OpenStack两个插件ip地址对应的属性不同
+阿里云插件中采用自己的属性设置，'public_ip' 和 'elastic_ip'这两个属性都设置为ip值
+7）保留多个测试用例，可以同时执行。
+考虑如何支持只支持某些用例
+8)RemoveBackendServers web控制台可以操作，使用sdk不能操作

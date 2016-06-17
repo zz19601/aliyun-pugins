@@ -1,0 +1,20 @@
+{
+    "Status": "running",
+    "HealthCheckHttpCode": "",
+    "PersistenceTimeout": 0,
+    "HealthCheckURI": "",
+    "HealthCheck": "on",
+    "RequestId": "15F4CFDA-2BE7-4138-98B7-C2D13BFDE80E",
+    "ListenerPort": 60003,
+    "BackendServerPort": 3389,
+    "UnhealthyThreshold": 3,
+    "HealthyThreshold": 3,
+    "Bandwidth": -1,
+    "HealthCheckInterval": 2,
+    "HealthCheckConnectPort": 3389,
+    "VServerGroupId": "rsp-12918q5b6j",
+    "Scheduler": "wrr",
+    "HealthCheckConnectTimeout": 5,
+    "HealthCheckType": "tcp",
+    "HealthCheckDomain": ""
+}

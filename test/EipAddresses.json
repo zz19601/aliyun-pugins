@@ -1,0 +1,24 @@
+{
+    "TotalCount": 1, 
+    "PageNumber": 1, 
+    "PageSize": 50, 
+    "EipAddresses": {
+        "EipAddress": [
+            {
+                "Status": "InUse", 
+                "AllocationTime": "2015-07-02T02:14:09Z", 
+                "OperationLocks": {
+                    "LockReason": []
+                }, 
+                "InstanceId": "i-255l7w4iu", 
+                "RegionId": "cn-beijing", 
+                "InstanceType": "EcsInstance", 
+                "Bandwidth": "200", 
+                "InternetChargeType": "PayByTraffic", 
+                "IpAddress": "123.56.6.130", 
+                "AllocationId": "eip-25jqcxd85"
+            }
+        ]
+    }, 
+    "RequestId": "D138144E-4A1C-4C2D-B096-DF0CA01A6A5D"
+}

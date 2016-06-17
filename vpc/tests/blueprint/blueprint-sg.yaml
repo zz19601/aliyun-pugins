@@ -1,0 +1,147 @@
+# DSL version, should appear in the main blueprint.yaml
+# and may appear in other imports. In such case, the versions must match
+tosca_definitions_version: cloudify_dsl_1_2
+
+imports:
+  - types.yaml
+  - plugin.yaml
+
+inputs:
+    # example input that could be injected by test
+    existing_vpc_id:
+        default: vpc-25a0ko9h8
+    existing_subnet_id:
+        default: vsw-25viu1g0n
+    existing_sg_id:
+        default: sg-25i54ut7u
+    existing_vm:
+        default: i-25d3mpbid 
+
+node_templates:
+
+  existing_vpc:
+    type: cloudify.aliyun.nodes.VPC
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_vpc_id }
+      cidr_block: 172.16.0.0/12
+
+  existing_subnet:
+    type: cloudify.aliyun.nodes.Subnet
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_subnet_id }
+      cidr_block: 172.16.0.0/24
+    relationships:
+      - type: cloudify.aliyun.relationships.subnet_contained_in_vpc
+        target: existing_vpc
+
+  existing_sg:
+    type: cloudify.aliyun.nodes.SecurityGroup
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_sg_id }
+      rules:
+        # add 2 new rules
+        - egress: false
+          ip_protocol: tcp
+          port_range_from: 80
+          port_range_to: 80
+          peer_cidr_ip: 0.0.0.0/0
+          policy: accept
+          priority: 1
+          nic_type: intranet
+        - egress: true
+          ip_protocol: tcp
+          port_range_from: 8000
+          port_range_to: 8088
+          peer_cidr_ip: 0.0.0.0/0
+          policy: accept
+          priority: 1
+          nic_type: intranet
+    relationships:
+      - type: cloudify.aliyun.relationships.security_group_contained_in_vpc
+        target: existing_vpc
+
+  new_sg:
+    type: cloudify.aliyun.nodes.SecurityGroup
+    properties:
+      use_external_resource: false
+      resource_id:
+      description: TestNewSG
+      rules:
+        - egress: false
+          # allow ping in
+          ip_protocol: icmp
+          port_range_from: -1
+          port_range_to: -1
+          peer_cidr_ip: 0.0.0.0/0
+          policy: accept
+          priority: 1
+          nic_type: intranet
+        - egress: false
+          # allow ssh in
+          ip_protocol: tcp
+          port_range_from: 22
+          port_range_to: 22
+          peer_cidr_ip: 0.0.0.0/0
+          policy: accept
+          priority: 1
+          nic_type: intranet
+        - egress: false
+          # allow normal tcp access from specified sg
+          ip_protocol: tcp
+          port_range_from: 1
+          port_range_to: 1024
+          peer_group_id: { get_input: existing_sg_id }
+          policy: accept
+          priority: 1
+          nic_type: intranet
+        - egress: true
+          # allow ping others
+          ip_protocol: icmp
+          port_range_from: -1
+          port_range_to: -1
+          peer_cidr_ip: 0.0.0.0/0
+          policy: accept
+          priority: 1
+          nic_type: intranet
+        - egress: true
+          # allow access extern normal services
+          ip_protocol: tcp
+          port_range_from: 1
+          port_range_to: 1024
+          peer_cidr_ip: 0.0.0.0/0
+          policy: accept
+          priority: 1
+          nic_type: intranet
+    relationships:
+      - type: cloudify.aliyun.relationships.security_group_contained_in_vpc
+        target: existing_vpc
+      - type: cloudify.relationships.connected_to
+        # this sg depend on existing_sg
+        target: existing_sg
+
+  exist_vm:
+    type: cloudify.aliyun.nodes.Instance
+    properties:
+      agent_config:
+        install_method: none
+        # for basic test, not install agent now
+      use_external_resource: true
+      resource_id: { get_input: existing_vm }
+      image_id: 
+      instance_type: 
+    relationships:
+      - type: cloudify.aliyun.relationships.instance_contained_in_subnet
+        target: existing_subnet
+      - type: cloudify.aliyun.relationships.instance_connected_to_security_group
+        target: existing_sg
+      - type: cloudify.aliyun.relationships.instance_connected_to_security_group
+        target: new_sg
+
+outputs:
+    # example output the could be used to simplify assertions by test
+    sg:
+        value: { get_attribute: [new_sg, aliyun_resource_id] }
+     

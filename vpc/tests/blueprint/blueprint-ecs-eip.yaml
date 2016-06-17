@@ -1,0 +1,65 @@
+# DSL version, should appear in the main blueprint.yaml
+# and may appear in other imports. In such case, the versions must match
+tosca_definitions_version: cloudify_dsl_1_2
+
+imports:
+  - types.yaml
+  - plugin.yaml
+
+inputs:
+    # example input that could be injected by test
+    existing_vpc_id:
+        default: vpc-25a0ko9h8
+    existing_subnet_id:
+        default: vsw-25viu1g0n
+    existing_vm:
+        default: exist_test_instance_id
+    existing_eip_id:
+        default: eip-25vmy7e62
+
+node_templates:
+  existing_vpc:
+    type: cloudify.aliyun.nodes.VPC
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_vpc_id }
+      cidr_block: 172.16.0.0/12
+
+  existing_subnet:
+    type: cloudify.aliyun.nodes.Subnet
+    properties:
+      use_external_resource: true
+      resource_id: { get_input: existing_subnet_id }
+      cidr_block: 172.16.0.0/24
+    relationships:
+      - type: cloudify.aliyun.relationships.subnet_contained_in_vpc
+        target: existing_vpc
+  eip:
+    type: cloudify.aliyun.nodes.ElasticIP
+    properties:
+      use_external_resource: false
+      # resource_id: { get_input: existing_eip_id }
+      domain: 'VPC'
+      band_width: '1'
+      internet_charge_type: PayByTraffic    
+
+  exist_vm:
+    type: cloudify.aliyun.nodes.Instance
+    properties:
+      agent_config:
+        install_method: none
+        # for basic test, not install agent now
+      use_external_resource: true
+      resource_id: { get_input: existing_vm }
+      image_id: 
+      instance_type: 
+    relationships:
+      - type: cloudify.aliyun.relationships.instance_contained_in_subnet
+        target: existing_subnet
+      - type: cloudify.aliyun.relationships.instance_connected_to_elastic_ip
+        target: eip
+   
+outputs:
+    # example output the could be used to simplify assertions by test
+    vm_id:
+      value: { get_attribute: [exist_vm, aliyun_resource_id] }
