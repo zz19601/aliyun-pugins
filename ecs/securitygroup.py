@@ -136,21 +136,35 @@ class SecurityGroup(AliyunBaseNode):
 
     def _create_rule(self, sg_json, item):
         group_rule_equallity = 0
-        if 'port_range_from' and 'port_range_to' in item:
-            PortRange = str(item['port_range_from']) + '/' + str(item['port_range_to'])
+        if 'port_range_from' in item and 'port_range_to' in item:
+            port_range = str(item['port_range_from']) + '/' + str(item['port_range_to'])
         if 'peer_cidr_ip' in item:
             SG_IN_RULES_PROPERTIES = SG_IN_RULES_PROPERTIES_Cidr
         else:
             if 'peer_group_id' in item:
                 SG_IN_RULES_PROPERTIES = SG_IN_RULES_PROPERTIES_Source
-
         for key in SG_IN_RULES_PROPERTIES.keys():
             if key in item:
                 continue
             else:
                 group_rule_equallity = 1
+        #group_rule_equallity = 1 means this rule does not exit before and can be created.
         if group_rule_equallity:
-            
+            for key, value in item.items():
+                if isinstance(value, type(True)):
+                    value = 'on' if value else 'off'
+                if key in SG_IN_RULES_PROPERTIES.keys() and len(str(value)) >0:
+                    set_function = getattr(
+                        request, 'set_' + SG_IN_RULES_PROPERTIES[key], None
+                    )
+                    if set_function:
+                        set_function(value)
+            #equals to add value to setter
+            #need to think about how port_range work here.
+            set_function_portrange = getattr(
+                request, 'set_PortRange', None)
+            if set_function_portrange:
+                set_function_portrange(value)
         # todo: create rule if it not in sg
         # in rule, ref to: https://help.aliyun.com/document_detail/25554.html
         # the following fields determine an in rule:
