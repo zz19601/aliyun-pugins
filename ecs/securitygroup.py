@@ -63,6 +63,21 @@ SG_IN_RULES_PROPERTIES_Cidr = dict(
     nic_type='NicType'
     policy='Policy'
 )
+SG_OUT_RULES_PROPERTIES_SOURCE = dict(
+    peer_group_owner_account='DestGroupOwnerAccount'
+    peer_group_id='DestGroupId'
+    ip_protocol='IpProtocol'
+    #PortRange
+    nic_type='NicType'
+    policy='Policy'
+)
+SG_OUT_RULES_PROPERTIES_Cidr = dict(
+    peer_cidr_ip='DestCidrIp'
+    ip_protocol='IpProtocol'
+    #PortRange
+    nic_type='NicType'
+    policy='Policy'
+)
 SG_IDS = 'sg_ids'
 
 
@@ -138,6 +153,7 @@ class SecurityGroup(AliyunBaseNode):
         group_rule_equallity = 0
         if 'port_range_from' in item and 'port_range_to' in item:
             port_range = str(item['port_range_from']) + '/' + str(item['port_range_to'])
+        # in rules:
         if 'peer_cidr_ip' in item:
             SG_IN_RULES_PROPERTIES = SG_IN_RULES_PROPERTIES_Cidr
         else:
@@ -164,7 +180,9 @@ class SecurityGroup(AliyunBaseNode):
             set_function_portrange = getattr(
                 request, 'set_PortRange', None)
             if set_function_portrange:
-                set_function_portrange(value)
+                set_function_portrange(port_range)
+        # set data for out rules:
+        
         # todo: create rule if it not in sg
         # in rule, ref to: https://help.aliyun.com/document_detail/25554.html
         # the following fields determine an in rule:
